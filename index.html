@@ -21,10 +21,10 @@
 		    $('#date').datepicker({dateFormat: "yy/mm/dd"});
 
         $('#file').on("change", function() {
-            var file = this.files[0];
-            var fr = new FileReader();
+            let file = this.files[0];
+            let fr = new FileReader();
             fr.onload = function(e) {
-                alert("aaa");
+                $('#filetype').val(file.type);
                 $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
             }
             fr.readAsDataURL(file);
@@ -34,7 +34,9 @@
       <form method="post" action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec" id="postjump">
         取引日：<br><input type="text" name="date" id="date"><p>
         ファイル名：<br><input type="text" name="filename" value="test"><p>
-        <input type="hidden" name="file" id="fileuri"><p>
+        <input type="hidden" name="file" id="fileuri">
+        <input type="text" name="filetype" id="filetype"><p>
+        
         
         <input type="file" id="file"><br>
         <input type="submit" value="Upload File">
