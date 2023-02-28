@@ -8,7 +8,7 @@ function doPost(e) {
   } else {
     var data = Utilities.base64Decode(e.parameters.file, Utilities.Charset.UTF_8);
     var blob = Utilities.newBlob(data, MimeType.PNG, e.parameters.filename);
-    DriveApp.getFolderById('1TwVuC4qEyUoDZ44kNp7kIlmPZn8iA-GZ').createFile(blob);
+    DriveApp.getFolderById('19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe').createFile(blob);
     return message("completed");
   }
 }
