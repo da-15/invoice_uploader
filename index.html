@@ -1,45 +1,70 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link media="all" href="assets/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css"/>
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script></head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1/i18n/jquery.ui.datepicker-ja.min.js"></script>
+  </head>
   <body>
-
     <script type="text/javascript">
-      $(function(){
+      $(function () {
         const now = new Date();
-        const today = now.getFullYear() + '/' + 
-          String(now.getMonth() + 1).padStart(2, '0') + '/' + 
+        const today = now.getFullYear() + '/' +
+          String(now.getMonth() + 1).padStart(2, '0') + '/' +
           String(now.getDate()).padStart(2, '0');
-		    $('#date').val(today);
+        $('#date').val(today);
 
         $.datepicker.setDefaults($.datepicker.regional['ja']);
-		    $('#date').datepicker({dateFormat: "yy/mm/dd"});
+        $('#date').datepicker({ dateFormat: 'yy/mm/dd' });
 
-        $('#file').on("change", function() {
-            let file = this.files[0];
-            let fr = new FileReader();
-            fr.onload = function(e) {
-                $('#filetype').val(file.type);
-                $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
-            }
-            fr.readAsDataURL(file);
+        $('#fileinput').on('change', function () {
+          let file = this.files[0];
+          let fr = new FileReader();
+          fr.onload = function (e) {
+            $('#filename').val(file.name);
+            $('#filetype').val(file.type);
+            $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
+          };
+          fr.readAsDataURL(file);
         });
       });
     </script>
-      <form method="post" action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec" id="postjump">
-        取引日：<br><input type="text" name="date" id="date"><p>
-        ファイル名：<br><input type="text" name="filename" value="test"><p>
-        <input type="hidden" name="file" id="fileuri">
-        <input type="text" name="filetype" id="filetype"><p>
-        
-        
-        <input type="file" id="file"><br>
-        <input type="submit" value="Upload File">
-      </form>
+
+    <main class="cat_top">
+      <div class="cp_contents">
+      <form
+        method="post"
+        action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec"
+      >
+      <p>
+      取引日：<br />
+      <input type="text" name="date" id="date"  class="cp_input"/>
+      </p>
+      <p>
+        メモ：取引先<br />
+        <input type="text" name="memo" value="test" class="cp_input"/>
+        <p>
+          <p>
+            <input type="text" id="filename" class="cp_input" placeholder="ファイルを選択してください" disabled/>
+          </p>
+          <p>
+            <label for="fileinput" class="cp_file">ファイルを選択</label>
+            <input type="file" id="fileinput" class="cp_fileinput"/>
+          </p>
+          <p>
+            <input type="submit" value="アップロードする" class="cp_button"/>
+          </p>
+        </p>
+      </p>
+      <input type="hidden" name="file" id="fileuri"/>
+      <input type="hidden" name="filetype" id="filetype"/>
+    </form>
+    </div>
+    </main>
   </body>
 </html>

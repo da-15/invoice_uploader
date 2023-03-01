@@ -3,13 +3,21 @@ function doGet(e) {
 }
 
 function doPost(e) {
-  if (!e.parameters.filename || !e.parameters.file) {
+  if (!e.parameters.memo || !e.parameters.file) {
     return message("Error: Bad parameters");
   } else {
-    var data = Utilities.base64Decode(e.parameters.file, Utilities.Charset.UTF_8);
-    var blob = Utilities.newBlob(data, MimeType.PNG, e.parameters.filename);
+
+    let filename = e.parameters.memo;
+    if(e.parameters.filetype == 'image/jpeg'){
+      filename += '.jpg';
+    }else if(e.parameters.filetype == 'image/png'){
+      filename += '.png';
+    }
+
+    let data = Utilities.base64Decode(e.parameters.file, Utilities.Charset.UTF_8);
+    let blob = Utilities.newBlob(data, e.parameters.filetype, filename);
     DriveApp.getFolderById('19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe').createFile(blob);
-    return message("completed");
+    return message("completed" + e.parameters.filetype);
   }
 }
 
