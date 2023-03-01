@@ -13,7 +13,7 @@ body {
 }
 
 a {
-    color: #da99b5;
+    color: #97abc3;
 }
 
 @media (max-width: 670px) {
@@ -55,7 +55,7 @@ a {
     padding: 2.0rem;
     letter-spacing: 1px;
     color: #333;
-    border: 1px solid #da99b5;
+    border: 1px solid #97abc3;
     border-radius: 50vh;
     font-size: 2.0rem;
     font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
@@ -74,7 +74,7 @@ a {
     -webkit-appearance: none;
     margin: 10px 0px;
     color: #fff;
-    background-color: #da99b5;
+    background-color: #97abc3;
     border-radius: 100vh;
     border: 0px;
     padding: 2.0rem 0rem;
@@ -89,7 +89,7 @@ a {
     -webkit-appearance: none;
     margin: 10px 0px;
     color: #fff;
-    background-color: #da99b5;
+    background-color: #97abc3;
     border-radius: 100vh;
     border: 0px;
     padding: 2.0rem 4.0rem;
@@ -99,63 +99,14 @@ a {
 }
 
 .cp_button:active {
-    background-color: #ffc3da;
+    background-color: #9aaeb6;
     outline: none;
 }
 
 
-/* ラジオボタン */
-
-.cp_radio {
-    text-align: left;
-    display: inline-block;
-    margin: 10px 0px;
-}
-
-.cp_radio label {
-    padding: 0 0 0 32px;
-    /* ラベルの位置 */
-    line-height: 33px;
-    /* ボタンのサイズに合わせる */
-    display: inline-block;
-    cursor: pointer;
-    position: relative;
-}
-
-.cp_radio label:before {
-    content: '';
-    width: 28px;
-    /* ボタンの横幅 */
-    height: 28px;
-    /* ボタンの縦幅 */
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: #da99b5;
-    border-radius: 50%;
-}
-
-.cp_radio input[type="radio"] {
-    display: none;
-}
-
-.cp_radio input[type="radio"]:checked+label:after {
-    content: '';
-    width: 10px;
-    /* マークの横幅 */
-    height: 10px;
-    /* マークの縦幅 */
-    position: absolute;
-    top: 9px;
-    left: 9px;
-    background-color: #fff;
-    border-radius: 50%;
-}
-
 
 /* チェックボックス */
-
-.cp_checkbox_data_json {
+.cp_checkbox {
     font-size: 1.5rem;
     color: #888;
 }
@@ -164,7 +115,7 @@ input[type=checkbox] {
     display: none;
 }
 
-.cp_checkbox_data_json {
+.cp_checkbox {
     box-sizing: border-box;
     cursor: pointer;
     display: inline-block;
@@ -173,7 +124,7 @@ input[type=checkbox] {
     width: auto;
 }
 
-.cp_checkbox_data_json::before {
+.cp_checkbox::before {
     background: #fff;
     border: 1px solid #888;
     content: '';
@@ -186,9 +137,9 @@ input[type=checkbox] {
     top: 50%;
 }
 
-.cp_checkbox_data_json::after {
-    border-right: 3px solid #da99b5;
-    border-bottom: 3px solid #da99b5;
+.cp_checkbox::after {
+    border-right: 3px solid #97abc3;
+    border-bottom: 3px solid #97abc3;
     content: '';
     display: block;
     height: 9px;
@@ -201,6 +152,6 @@ input[type=checkbox] {
     width: 5px;
 }
 
-input[type=checkbox]:checked+.cp_checkbox_data_json::after {
+input[type=checkbox]:checked+.cp_checkbox::after {
     opacity: 1;
 }
