@@ -244,7 +244,7 @@
       <p>
         <label class="cp_select">
           <select name="preset" id="preset">
-              <option value="">――― 取引先を選択してください ―――</option>
+              <option value="">――― 支払先を選択してください ―――</option>
               <option value="TEPCO">TEPCO</option>
               <option value="東京水道局">東京水道局</option>
               <option value="KDDI">KDDI</option>
@@ -253,24 +253,16 @@
               <option value="">その他</option>
           </select>
       </label>
-        <input type="text" name="memo" id="memo" placeholder="取引先の備考を入力してください" class="cp_input"/>
-      </p>
-      <p>
+        <input type="text" name="memo" id="memo" placeholder="支払先の備考を入力してください" class="cp_input"/><br>
         <input type="text" id="price" class="cp_input" placeholder="価格（税込）を入力してください"/>
       </p>
       <p>
-        <input type="text" id="filename" class="cp_input" placeholder="ファイルを選択してください" disabled/>
-      </p>
-      <p>
+        <input type="text" id="filename" class="cp_input" placeholder="ファイルを選択してください" disabled/><br>
         <input type="file" id="fileinput" class="cp_fileinput"/>
-        <label for="fileinput" class="cp_file">ファイルを選択</label>
-      </p>
-      <p>
-        <input type="button" value="アップロードする" id="upload_button" onclick="sendFile();" class="cp_button"/>
-      </p>
-      <p>
+        <label for="fileinput" class="cp_file">画像を選択</label><br>
+        <input type="button" value="アップロードする" id="upload_button" onclick="sendFile();" class="cp_button"/><br>
         <input type="checkbox" name="resize" id="resize">
-        <label for="resize" class="cp_checkbox">ファイルをリサイズ（圧縮）する</label>
+        <label for="resize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
       <input type="hidden" name="file" id="fileuri"/>
       <input type="hidden" name="filetype" id="filetype"/>
