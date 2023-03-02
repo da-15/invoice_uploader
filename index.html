@@ -182,15 +182,18 @@
     <script type="text/javascript">
       $(function () {
         //日付の初期値をセット
-        const now = new Date();
-        const today = now.getFullYear() + '/' +
-          String(now.getMonth() + 1).padStart(2, '0') + '/' +
-          String(now.getDate()).padStart(2, '0');
-        $('#date').val(today);
+        const today = new Date();
+        $('#date').val(today.toISOString().substring(0, 10));
 
         //日付選択ダイアログ
-        $.datepicker.setDefaults($.datepicker.regional['ja']);
-        $('#date').datepicker({ dateFormat: 'yy/mm/dd' });
+        //$.datepicker.setDefaults($.datepicker.regional['ja']);
+        //$('#date').datepicker({ dateFormat: 'yy/mm/dd' });
+
+        //セレクトが選択された
+        $('#preset').on('change', function () {
+            //テンプレート適用
+            $('#memo').val( $('#preset').val());
+        });
 
         //画像選択時にアップロード用情報をセット
         $('#fileinput').on('change', function () {
@@ -232,10 +235,10 @@
       //入力フォームを入力可/不可切替
       function setFormDisabled(lock) {
         $('#date').prop('readonly', lock);
-        $('#preset').prop('readonly', lock);
         $('#memo').prop('readonly', lock);
         $('#price').prop('readonly', lock);
 
+        $('#preset').prop('disabled', lock);
         $('#fileinput').prop('disabled', lock);
         $('#upload_button').prop('disabled', lock);
       }
@@ -249,22 +252,22 @@
         onsubmit="return sendFile();">
       <p>
       レシートの取引情報<br >
-      <input type="text" name="date" id="date"  class="cp_input">
+      <input type="date" name="date" id="date"  class="cp_input">
       </p>
       <p>
         <label class="cp_select">
           <select name="preset" id="preset">
               <option value="">――― 支払先を選択してください ―――</option>
-              <option value="TEPCO">TEPCO</option>
-              <option value="東京水道局">東京水道局</option>
-              <option value="KDDI">KDDI</option>
-              <option value="GMOインターネット">GMOインターネット</option>
-              <option value="会議">会議</option>
+              <option value="TEPCO（●月20日〜●月19日分）">TEPCO</option>
+              <option value="東京水道局（●、●、●月分）">東京水道局</option>
+              <option value="KDDI（●月分 ●月請求分）">KDDI</option>
+              <option value="GMOインターネット（●月分）">GMOインターネット</option>
+              <option value="●（会議）">会議</option>
               <option value="">その他</option>
           </select>
       </label>
         <input type="text" name="memo" id="memo" placeholder="支払先の備考を入力してください" class="cp_input"><br>
-        <input type="text" id="price" class="cp_input" placeholder="価格（税込）を入力してください">
+        <input type="number" id="price" class="cp_input" min="1" max="99999" placeholder="価格（税込）を入力してください">
       </p>
       <p>
         <input type="text" id="filename" class="cp_input" placeholder="画像を選択してください" readonly><br>
