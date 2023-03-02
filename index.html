@@ -5,7 +5,7 @@
     <title>レシート取込</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="icon" type="image/png" href="./icon.png">
-    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -186,8 +186,8 @@
         $('#date').val(today.toISOString().substring(0, 10));
 
         //日付選択ダイアログ
-        //$.datepicker.setDefaults($.datepicker.regional['ja']);
-        //$('#date').datepicker({ dateFormat: 'yy/mm/dd' });
+        $.datepicker.setDefaults($.datepicker.regional['ja']);
+        $('#date').datepicker({ dateFormat: 'yy-mm-dd' });
 
         //セレクトが選択された
         $('#preset').on('change', function () {
@@ -200,8 +200,8 @@
           let file = this.files[0];
           let fr = new FileReader();
           fr.onload = function (e) {
-            $('#filename').val(file.name);
-            $('#filetype').val(file.type);
+            $('#filename').val(file.name); //ファイル名
+            $('#filetype').val(file.type); //MIME Type
             $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
           };
           fr.readAsDataURL(file);
@@ -252,7 +252,7 @@
         onsubmit="return sendFile();">
       <p>
       レシートの取引情報<br >
-      <input type="date" name="date" id="date"  class="cp_input">
+      <input type="text" name="date" id="date"  class="cp_input">
       </p>
       <p>
         <label class="cp_select">
