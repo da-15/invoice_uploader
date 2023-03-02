@@ -192,15 +192,18 @@
     </style>
     <script type="text/javascript">
       $(function () {
+        //日付の初期値をセット
         const now = new Date();
         const today = now.getFullYear() + '/' +
           String(now.getMonth() + 1).padStart(2, '0') + '/' +
           String(now.getDate()).padStart(2, '0');
         $('#date').val(today);
 
+        //日付選択ダイアログ
         $.datepicker.setDefaults($.datepicker.regional['ja']);
         $('#date').datepicker({ dateFormat: 'yy/mm/dd' });
 
+        //画像選択時にアップロード用情報をセット
         $('#fileinput').on('change', function () {
           let file = this.files[0];
           let fr = new FileReader();
