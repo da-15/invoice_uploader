@@ -2,7 +2,9 @@
 <html>
   <head>
     <meta charset="UTF-8" >
+    <title>レシート取込</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" type="image/png" href="./icon.png">
     <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/smoothness/jquery-ui.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
     <script src="http://code.jquery.com/jquery-latest.js" type="text/javascript"></script>
@@ -14,7 +16,6 @@
       html {
         font-size: 62.5%;
       }
-
       body {
         font-size: 2.0rem;
         margin: 0px;
@@ -22,11 +23,9 @@
         color: #333;
         font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
       }
-
       a {
         color: #97abc3;
       }
-
       @media (max-width: 670px) {
         /* スマホ */
         main {
@@ -37,7 +36,6 @@
           width: 100%;
         }
       }
-
       @media (max-width: 1100px) and (min-width: 671px) {
         /* タブレット */
         main {
@@ -48,7 +46,6 @@
           width: 400px;
         }
       }
-
       @media (min-width: 1101px) {
         /* パソコン */
         main {
@@ -59,7 +56,6 @@
           width: 400px;
         }
       }
-
       .cp_contents {
         margin: 20px;
       }
@@ -86,7 +82,6 @@
       .cp_fileinput{
         display: none;
       }
-
       .cp_button, .cp_file{
         display: inline-block;
         -webkit-appearance: none;
@@ -100,7 +95,6 @@
         font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
         outline: none;
       }
-
       .cp_button:disabled{
         background-color: #7d7d7d;
       }
@@ -114,11 +108,9 @@
         font-size: 1.5rem;
         color: #888;
       }
-
       input[type=checkbox] {
         display: none;
       }
-
       .cp_checkbox {
         box-sizing: border-box;
         cursor: pointer;
@@ -127,7 +119,6 @@
         position: relative;
         width: auto;
       }
-
       .cp_checkbox::before {
         background: #fff;
         border: 1px solid #888;
@@ -140,7 +131,6 @@
         position: absolute;
         top: 50%;
       }
-
       .cp_checkbox::after {
         border-right: 3px solid #97abc3;
         border-bottom: 3px solid #97abc3;
@@ -155,7 +145,6 @@
         transform: rotate(45deg);
         width: 5px;
       }
-
       input[type=checkbox]:checked+.cp_checkbox::after {
         opacity: 1;
       }
@@ -166,7 +155,6 @@
         align-items: center;
         position: relative;
       }
-
       .cp_select::after {
           position: absolute;
           right: 15px;
@@ -177,7 +165,6 @@
           content: '';
           pointer-events: none;
       }
-
       .cp_select select {
           appearance: none;
           min-width: 230px;
@@ -215,6 +202,8 @@
           fr.readAsDataURL(file);
         });
       });
+
+      //SUBMITボタン押下時にファイルをアップロードする
       function sendFile(){
         const form = document.querySelector('form');
         const xhr = new XMLHttpRequest();
@@ -237,12 +226,14 @@
         //actionに遷移させない
         return false;
       }
+
+      //入力フォームを入力可/不可切替
       function setFormDisabled(lock) {
         $('#date').prop('readonly', lock);
         $('#preset').prop('readonly', lock);
         $('#memo').prop('readonly', lock);
         $('#price').prop('readonly', lock);
-                
+
         $('#fileinput').prop('disabled', lock);
         $('#upload_button').prop('disabled', lock);
       }
