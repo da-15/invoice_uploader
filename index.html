@@ -65,7 +65,7 @@
         margin: 10px 0px;
         box-sizing: border-box;
         width: 100%;
-        padding: 2.0rem;
+        padding: 1.5rem;
         letter-spacing: 1px;
         color: #333;
         border: 1px solid #97abc3;
@@ -172,7 +172,7 @@
           padding: .4em calc(.8em + 30px) .4em .8em;
           border: 1px solid #97abc3;
           outline: 0px;
-          border-radius: 3px;
+          border-radius: 100vh;
           background-color: #fff;
           color: #333;
           font-size: 1.7rem;
@@ -257,7 +257,7 @@
       <p>
         <label class="cp_select">
           <select name="preset" id="preset">
-              <option value="">――― 支払先を選択してください ―――</option>
+              <option value="">―― 支払先を選択してください ――</option>
               <option value="TEPCO（●月20日〜●月19日分）">TEPCO</option>
               <option value="東京水道局（●、●、●月分）">東京水道局</option>
               <option value="KDDI（●月分 ●月請求分）">KDDI</option>
@@ -277,6 +277,7 @@
         <input type="checkbox" name="resize" id="resize">
         <label for="resize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
+      <a href="./"><small>クリアする</small></a>
       <input type="hidden" name="file" id="fileuri">
       <input type="hidden" name="filetype" id="filetype">
     </form>
