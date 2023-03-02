@@ -183,7 +183,8 @@
       $(function () {
         //日付の初期値をセット
         const today = new Date();
-        $('#date').val(today.toISOString().substring(0, 10));
+        const jst = new Date(today.getTime() + 9 * 60 * 60 * 1000);
+        $('#date').val(jst.toISOString().substring(0, 10));
 
         //日付選択ダイアログ
         $.datepicker.setDefaults($.datepicker.regional['ja']);
@@ -210,6 +211,11 @@
 
       //SUBMITボタン押下時にファイルをアップロードする
       function sendFile(){
+        //入力チェック
+        if(!checkForm()){
+          return false;
+        }
+
         const form = document.querySelector('form');
         const xhr = new XMLHttpRequest();
         xhr.open('POST', form.action);
@@ -224,12 +230,24 @@
           if (xhr.status === 200) {
             alert(xhr.response); // レスポンスの内容を表示する
           } else {
-            alert('リクエストが失敗しました');
+            alert('リクエストが失敗しました: ' + xhr.status);
           }
           setFormDisabled(false);
         };
         //actionに遷移させない
         return false;
+      }
+      function checkForm(){
+        if($('#date').val() == '' || 
+           $('#memo').val() == '' || 
+           $('#fileuri').val() == '' || 
+           $('#price').val() == ''){
+            alert('【必須項目エラー】\n入力されていない項目があります。');
+            return false;
+        } else{
+          return true;
+        }
+
       }
 
       //入力フォームを入力可/不可切替
@@ -267,7 +285,7 @@
           </select>
       </label>
         <input type="text" name="memo" id="memo" placeholder="支払先の備考を入力してください" class="cp_input"><br>
-        <input type="number" id="price" class="cp_input" min="1" max="99999" placeholder="価格（税込）を入力してください">
+        <input type="number" name="price" id="price" class="cp_input" min="1" max="99999" placeholder="価格（税込）を入力してください">
       </p>
       <p>
         <input type="text" id="filename" class="cp_input" placeholder="画像を選択してください" readonly><br>
@@ -278,7 +296,7 @@
         <label for="resize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
       <a href="./"><small>クリアする</small></a>
-      <input type="hidden" name="file" id="fileuri">
+      <input type="hidden" name="fileuri" id="fileuri">
       <input type="hidden" name="filetype" id="filetype">
     </form>
     </div>
