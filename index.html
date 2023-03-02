@@ -78,6 +78,9 @@
         font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
         outline: none;
       }
+      .cp_input:read-only{
+        background-color: #dedede;
+      }
 
       /* ボタン */
       .cp_fileinput{
@@ -98,6 +101,9 @@
         outline: none;
       }
 
+      .cp_button:disabled{
+        background-color: #7d7d7d;
+      }
       .cp_button:active {
         background-color: #9aaeb6;
         outline: none;
@@ -225,8 +231,15 @@
           }
           setFormDisabled(false);
         };
+        //actionに遷移させない
+        return false;
       }
       function setFormDisabled(lock) {
+        $('#date').prop('readonly', lock);
+        $('#preset').prop('readonly', lock);
+        $('#memo').prop('readonly', lock);
+        $('#price').prop('readonly', lock);
+                
         $('#fileinput').prop('disabled', lock);
         $('#upload_button').prop('disabled', lock);
       }
@@ -236,7 +249,8 @@
     <main class="cat_top">
       <div class="cp_contents">
       <form method="post"
-        action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec">
+        action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec"
+        onsubmit="return sendFile();">
       <p>
       レシートの取引情報<br >
       <input type="text" name="date" id="date"  class="cp_input">
@@ -257,10 +271,10 @@
         <input type="text" id="price" class="cp_input" placeholder="価格（税込）を入力してください">
       </p>
       <p>
-        <input type="text" id="filename" class="cp_input" placeholder="ファイルを選択してください" disabled><br>
+        <input type="text" id="filename" class="cp_input" placeholder="画像を選択してください" readonly><br>
         <input type="file" id="fileinput" class="cp_fileinput">
         <label for="fileinput" class="cp_file">画像を選択</label><br>
-        <input type="button" value="アップロードする" id="upload_button" onclick="sendFile();" class="cp_button"><br>
+        <input type="submit" value="アップロードする" id="upload_button" class="cp_button"><br>
         <input type="checkbox" name="resize" id="resize">
         <label for="resize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
