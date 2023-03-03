@@ -20,6 +20,8 @@ function doPost(e) {
       filename += '.jpg';
     }else if(e.parameters.filetype == 'image/png'){
       filename += '.png';
+    }else if(e.parameters.filetype == 'application/pdf'){
+      filename += '.pdf';
     }
 
     let data = Utilities.base64Decode(e.parameters.fileuri, Utilities.Charset.UTF_8);
