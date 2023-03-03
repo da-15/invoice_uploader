@@ -31,6 +31,7 @@ function doPost(e) {
   }
 }
 
+
 function checkParameters(params){
   if(!params.memo || !params.fileuri || !params.price){
     return 'no_required'; //NG
