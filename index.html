@@ -220,6 +220,10 @@
         REQUEST_ERROR: '<span class="cp_error">リクエストが失敗しました。</span><br>',
         REQUIRED_ERROR: '<span class="cp_error">必須項目エラー</span><br>入力されていない項目があります。'
       }
+      const CONF = {
+        DEPLOY_ID: 'AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ',
+        FOLDER_ID: '19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe' //optional
+      }
       $(function () {
         //フォームを初期化
         initForm();
@@ -261,7 +265,8 @@
 
         const form = document.querySelector('form');
         const xhr = new XMLHttpRequest();
-        xhr.open('POST', form.action);
+        const actionURL = 'https://script.google.com/macros/s/' + CONF.DEPLOY_ID + '/exec';
+        xhr.open('POST', actionURL);
 
         // フォームデータを取得し、送信する
         const formData = new FormData(form);
@@ -315,6 +320,15 @@
         $('#price').val('');
         $('#fileuri').val('');
         $('#filename').val('');
+
+        if(CONF.FOLDER_ID !== ''){
+          let headerLiink = '';
+          headerLiink += '取込: ';
+          headerLiink += '<a href="https://drive.google.com/drive/folders/';
+          headerLiink +=  CONF.FOLDER_ID;
+          headerLiink += '" target="_blank">GDrive</a>';
+          $('#header_left').html(headerLiink);
+        }
       }
 
 
@@ -337,15 +351,11 @@
     </header>
     <main class="cat_top">
       <div class="cp_contents">
-      <form method="post"
-        action="https://script.google.com/macros/s/AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ/exec"
-        onsubmit="return sendFile();">
+      <form method="post" onsubmit="return sendFile();">
       <p>
       <table width="100%">
         <td align="left">
-          <small>取込:
-            <a href="https://drive.google.com/drive/folders/19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe" target="_blank">GDrive</a>
-          </small>
+          <small id="header_left"></small>
         </td>
         <td align="right">
           <small>pass:</small>
