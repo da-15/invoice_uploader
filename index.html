@@ -214,15 +214,14 @@
     </style>
     <script type="text/javascript">
       const MSG = {
-        DONE: '完了しました。<br><img src="./assets/done.png">',
+        DONE: '完了しました。（出力先: <a href="https://drive.google.com/drive/folders/[replace]" target="_blank">GDrive</a>）<br><img src="./assets/done.png">',
         WAITING: '処理中...しばらくお待ち下さい。<br><img src="./assets/waiting.gif">',
         ERROR: '<span class="cp_error">エラーが発生しました。</span><br>',
         REQUEST_ERROR: '<span class="cp_error">リクエストが失敗しました。</span><br>',
         REQUIRED_ERROR: '<span class="cp_error">必須項目エラー</span><br>入力されていない項目があります。'
       }
       const CONF = {
-        DEPLOY_ID: 'AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ',
-        FOLDER_ID: '19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe' //optional
+        DEPLOY_ID: 'AKfycbw6DhFdeqjNh85-oKD5dMznZYwsHnHY88MWPO2Ya8bOX7kRzfQAYRGtGIdoDSbpA5NbpQ'
       }
       $(function () {
         //フォームを初期化
@@ -262,7 +261,6 @@
         $('#result_table').css('display','block');
         $('#result_table').html(MSG.WAITING);
 
-
         const form = document.querySelector('form');
         const xhr = new XMLHttpRequest();
         const actionURL = 'https://script.google.com/macros/s/' + CONF.DEPLOY_ID + '/exec';
@@ -276,10 +274,11 @@
         // レスポンスが受信された場合の処理
         xhr.onload = () => {
           if (xhr.status === 200) {
-            const result = JSON.parse(xhr.responseText).result;
+            const res = JSON.parse(xhr.responseText);
+            const result = res.result;
 
             if(result == 'ok'){
-              $('#result_table').html(MSG.DONE);
+              $('#result_table').html((MSG.DONE).replace('[replace]', res.folderId));
               //アップロードファイルをクリア
               initForm();
             }else{
@@ -320,15 +319,6 @@
         $('#price').val('');
         $('#fileuri').val('');
         $('#filename').val('');
-
-        if(CONF.FOLDER_ID !== ''){
-          let headerLiink = '';
-          headerLiink += '取込: ';
-          headerLiink += '<a href="https://drive.google.com/drive/folders/';
-          headerLiink +=  CONF.FOLDER_ID;
-          headerLiink += '" target="_blank">GDrive</a>';
-          $('#header_left').html(headerLiink);
-        }
       }
 
 
@@ -354,9 +344,6 @@
       <form method="post" onsubmit="return sendFile();">
       <p>
       <table width="100%">
-        <td align="left">
-          <small id="header_left"></small>
-        </td>
         <td align="right">
           <small>pass:</small>
           <input type="password" name="password" class="cp_pass">

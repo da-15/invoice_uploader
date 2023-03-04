@@ -33,10 +33,10 @@ function doPost(e) {
     filename += '.pdf';
   }
 
-  
-  
+  let folderId;
+
   try{
-    const folderId = getMyFolderId();
+    folderId = getMyFolderId();
     const data = Utilities.base64Decode(e.parameters.fileuri, Utilities.Charset.UTF_8);
     const blob = Utilities.newBlob(data, e.parameters.filetype, filename);
     
@@ -54,7 +54,7 @@ function doPost(e) {
     return message('ERROR: unexpected error(' + ex + ')');
   }
 
-  return message('ok');
+  return message('ok', folderId);
 }
 
 
@@ -116,8 +116,12 @@ function getMyFolderId(){
 
 //メッセージの生成 JSON
 
-function message(msg) {
-  return ContentService.createTextOutput(JSON.stringify({result: msg})).setMimeType(ContentService.MimeType.JSON);
+function message(msg,fId) {
+  let jsonVal = '';
+  if(fId){
+    jsonVal = fId;
+  }
+  return ContentService.createTextOutput(JSON.stringify({result: msg, folderId: jsonVal})).setMimeType(ContentService.MimeType.JSON);
 }
 
 
