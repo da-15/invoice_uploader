@@ -66,7 +66,10 @@
       .cp_contents {
         margin: 20px;
       }
-      
+      .cp_error{
+        color: #f00;
+        font-weight: bold;
+      }
       .result-table{
         min-height: 130px;
         width:100%;
@@ -210,11 +213,16 @@
       }
     </style>
     <script type="text/javascript">
+      const MSG = {
+        DONE: '完了しました。<br><img src="./assets/done.png">',
+        WAITING: '処理中...しばらくお待ち下さい。<br><img src="./assets/waiting.gif">',
+        ERROR: '<span class="cp_error">エラーが発生しました。</span><br>',
+        REQUEST_ERROR: '<span class="cp_error">リクエストが失敗しました。</span><br>',
+        REQUIRED_ERROR: '<span class="cp_error">必須項目エラー</span><br>入力されていない項目があります。'
+      }
       $(function () {
-        //日付の初期値をセット
-        const today = new Date();
-        const jst = new Date(today.getTime() + 9 * 60 * 60 * 1000);
-        $('#date').val(jst.toISOString().substring(0, 10));
+        //フォームを初期化
+        initForm();
 
         //日付選択ダイアログ
         $.datepicker.setDefaults($.datepicker.regional['ja']);
@@ -231,8 +239,8 @@
           let file = this.files[0];
           let fr = new FileReader();
           fr.onload = function (e) {
-            $('#filename').val(file.name); //ファイル名
-            $('#filetype').val(file.type); //MIME Type
+            $('#filename').val(file.name); 
+            $('#filetype').val(file.type); 
             $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
           };
           fr.readAsDataURL(file);
@@ -248,7 +256,7 @@
 
         //結果ボックスを表示
         $('#result_table').css('display','block');
-        $('#result_table').html('処理中...しばらくお待ち下さい。<br><img src="./assets/waiting.gif">');
+        $('#result_table').html(MSG.WAITING);
 
 
         const form = document.querySelector('form');
@@ -266,35 +274,51 @@
             const result = JSON.parse(xhr.responseText).result;
 
             if(result == 'ok'){
-              $('#result_table').html('完了しました。<br><img src="./assets/done.png">');
+              $('#result_table').html(MSG.DONE);
               //アップロードファイルをクリア
-              $('#fileuri').val('');
-              $('#filename').val('');
+              initForm();
             }else{
-              $('#result_table').html('エラーが発生しました。<br>' + result);
+              $('#result_table').html(MSG.ERROR + result);
             }
           } else {
-            $('#result_table').html('リクエストが失敗しました。<br> ERROR: ' + xhr.status);
+            $('#result_table').html(MSG.REQUEST_ERROR + xhr.status);
           }
           setFormDisabled(false);
         };
         //actionに遷移させない
         return false;
       }
+
+      //入力フォームの必須チェック
       function checkForm(){
         if($('#date').val() == '' || 
            $('#memo').val() == '' || 
            $('#fileuri').val() == '' || 
            $('#price').val() == ''){
-            alert('【必須項目エラー】\n入力されていない項目があります。');
+            $('#result_table').css('display','block');
+            $('#result_table').html(MSG.REQUIRED_ERROR);
             return false;
         } else{
           return true;
         }
-
       }
 
-      //入力フォームを入力可/不可切替
+
+      //入力フォームを初期化
+      function initForm(){
+        //日付の初期値をセット
+        const today = new Date();
+        const jst = new Date(today.getTime() + 9 * 60 * 60 * 1000);
+        $('#date').val(jst.toISOString().substring(0, 10));
+        $('#preset').val('');
+        $('#memo').val('');
+        $('#price').val('');
+        $('#fileuri').val('');
+        $('#filename').val('');
+      }
+
+
+      //フォーム入力可/不可切替
       function setFormDisabled(lock) {
         $('#date').prop('readonly', lock);
         $('#memo').prop('readonly', lock);
@@ -355,7 +379,7 @@
         <input type="checkbox" name="noresize" id="noresize">
         <label for="noresize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
-      <a href="./index.html"><small>クリアする</small></a><br>
+      <a href="JavaScript:initForm();"><small>クリアする</small></a><br>
       <input type="hidden" name="fileuri" id="fileuri">
       <input type="hidden" name="filetype" id="filetype">
     </form>
