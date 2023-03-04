@@ -45,7 +45,7 @@
             width: 671px;
         }
         .cp_button, .cp_file{
-          width: 400px;
+          width: 380px;
         }
       }
       @media (min-width: 1101px) {
@@ -55,7 +55,7 @@
             width: 671px;
         }
         .cp_button, .cp_file{
-          width: 400px;
+          width: 380px;
         }
       }
       .cp_contents {
@@ -78,7 +78,7 @@
         margin: 10px 0px;
         box-sizing: border-box;
         width: 100%;
-        padding: 1.5rem;
+        padding: 1.3rem;
         letter-spacing: 1px;
         color: #333;
         border: 1px solid #97abc3;
@@ -89,6 +89,16 @@
       }
       .cp_input:read-only{
         background-color: #dedede;
+      }
+      .cp_pass{
+        box-sizing: border-box;
+        padding: 0.5rem 1rem;
+        width:120px;
+        color: #333;
+        border: 1px solid #97abc3;
+        border-radius: 1vh;
+        font-size: 1.8rem;
+        outline:none;
       }
 
       /* ボタン */
@@ -103,7 +113,7 @@
         background-color: #97abc3;
         border-radius: 5vh;
         border: 0px;
-        padding: 1.8rem 0rem;
+        padding: 1.5rem 0rem;
         font-size: 2.0rem;
         font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
         outline: none;
@@ -250,11 +260,14 @@
 
             if(result == 'ok'){
               $('#result_table').html('完了しました。<br><img src="./assets/done.png">');
+              //アップロードファイルをクリア
+              $('#fileuri').val('');
+              $('#filename').val('');
             }else{
               $('#result_table').html('エラーが発生しました。<br>' + result);
             }
           } else {
-            alert('リクエストが失敗しました。<br> ERROR: ' + xhr.status);
+            $('#result_table').html('リクエストが失敗しました。<br> ERROR: ' + xhr.status);
           }
           setFormDisabled(false);
         };
@@ -294,11 +307,14 @@
         onsubmit="return sendFile();">
       <p>
       <table width="100%">
-        <td align="left">レシートの取込</td>
-        <td align="right">
-          <small>出力先:
+        <td align="left">レシートの取込：
+          <small>
             <a href="https://drive.google.com/drive/folders/19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe" target="_blank">GDrive</a>
           </small>
+        </td>
+        <td align="right">
+          <small>pass: </small>
+          <input type="password" name="password" class="cp_pass">
         </td>
       </table>
       <input type="text" name="date" id="date"  class="cp_input">
