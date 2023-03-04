@@ -28,6 +28,11 @@
       a {
         color: #97abc3;
       }
+      header{
+        padding-top:10px;
+        font-size: 1.3rem;
+        font: #979696;
+      }
       @media (max-width: 670px) {
         /* スマホ */
         main {
@@ -61,16 +66,18 @@
       .cp_contents {
         margin: 20px;
       }
-
+      
       .result-table{
-        height: 100px;
+        height: 110px;
         width:100%;
         border: 3px solid #5c6877;
         border-radius: 1vh;
-        margin: 0 auto;
+        margin: 10px 0px 0px 0px;
         padding: 1.5rem 0;
-        font-size: 2.0rem;
-        display: none;
+        font-size: 1.8rem;
+        font-family: "Open Sans", "游ゴシック体", YuGothic, "游ゴシック Medium", "Yu Gothic Medium", "游ゴシック", "Yu Gothic", sans-serif;
+        box-sizing: border-box;
+        display: block;
       }
 
       /* インプット */
@@ -300,6 +307,10 @@
     </script>
   </head>
   <body>
+    <header>
+      <img src="./assets/icon.png" width="32px"><br>
+      <b>レシートアップローダ</b>
+    </header>
     <main class="cat_top">
       <div class="cp_contents">
       <form method="post"
@@ -307,16 +318,18 @@
         onsubmit="return sendFile();">
       <p>
       <table width="100%">
-        <td align="left">レシートの取込：
-          <small>
+        <td align="left">
+          <small>取込:
             <a href="https://drive.google.com/drive/folders/19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe" target="_blank">GDrive</a>
           </small>
         </td>
         <td align="right">
-          <small>pass: </small>
+          <small>pass:</small>
           <input type="password" name="password" class="cp_pass">
         </td>
       </table>
+      <div id="result_table" class="result-table"></div>
+
       <input type="text" name="date" id="date"  class="cp_input">
       </p>
       <p>
@@ -342,8 +355,7 @@
         <input type="checkbox" name="noresize" id="noresize">
         <label for="noresize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
-      <div id="result_table" class="result-table"></div>
-      <a href="./"><small>クリアする</small></a><br>
+      <a href="./index.html"><small>クリアする</small></a><br>
       <input type="hidden" name="fileuri" id="fileuri">
       <input type="hidden" name="filetype" id="filetype">
     </form>
