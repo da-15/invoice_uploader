@@ -62,6 +62,17 @@
         margin: 20px;
       }
 
+      .result-table{
+        height: 100px;
+        width:100%;
+        border: 3px solid #5c6877;
+        border-radius: 1vh;
+        margin: 0 auto;
+        padding: 1.5rem 0;
+        font-size: 2.0rem;
+        display: none;
+      }
+
       /* インプット */
       .cp_input {
         margin: 10px 0px;
@@ -218,6 +229,11 @@
           return false;
         }
 
+        //結果ボックスを表示
+        $('#result_table').css('display','block');
+        $('#result_table').html('処理中...しばらくお待ち下さい。<br><img src="./assets/waiting.gif">');
+
+
         const form = document.querySelector('form');
         const xhr = new XMLHttpRequest();
         xhr.open('POST', form.action);
@@ -230,9 +246,15 @@
         // レスポンスが受信された場合の処理
         xhr.onload = () => {
           if (xhr.status === 200) {
-            alert(xhr.response); // レスポンスの内容を表示する
+            const result = JSON.parse(xhr.responseText).result;
+
+            if(result == 'ok'){
+              $('#result_table').html('完了しました。<br><img src="./assets/done.png">');
+            }else{
+              $('#result_table').html('エラーが発生しました。<br>' + result);
+            }
           } else {
-            alert('リクエストが失敗しました: ' + xhr.status);
+            alert('リクエストが失敗しました。<br> ERROR: ' + xhr.status);
           }
           setFormDisabled(false);
         };
@@ -273,7 +295,11 @@
       <p>
       <table width="100%">
         <td align="left">レシートの取込</td>
-        <td align="right"><small>Googleに<a href="https://accounts.google.com/signin/v2/identifier" target="_blank">ログイン</a></a></small></td>
+        <td align="right">
+          <small>出力先:
+            <a href="https://drive.google.com/drive/folders/19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe" target="_blank">GDrive</a>
+          </small>
+        </td>
       </table>
       <input type="text" name="date" id="date"  class="cp_input">
       </p>
@@ -297,9 +323,10 @@
         <input type="file" id="fileinput" class="cp_fileinput">
         <label for="fileinput" class="cp_file">画像を選択</label><br>
         <input type="submit" value="アップロードする" id="upload_button" class="cp_button"><br>
-        <input type="checkbox" name="resize" id="resize">
-        <label for="resize" class="cp_checkbox">画像をリサイズしない</label>
+        <input type="checkbox" name="noresize" id="noresize">
+        <label for="noresize" class="cp_checkbox">画像をリサイズしない</label>
       </p>
+      <div id="result_table" class="result-table"></div>
       <a href="./"><small>クリアする</small></a><br>
       <input type="hidden" name="fileuri" id="fileuri">
       <input type="hidden" name="filetype" id="filetype">
