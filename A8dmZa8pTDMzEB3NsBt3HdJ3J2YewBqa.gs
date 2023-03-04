@@ -1,6 +1,5 @@
 'use strict';
 const CONF = {
-  FOLER_ID: '19WXq1CqvDV9dTmiS8HKiXuRbx19f_vxe', //保存先のフォルダID
   RESIZE: 2500
 }
 
@@ -39,13 +38,13 @@ function doPost(e) {
     const blob = Utilities.newBlob(data, e.parameters.filetype, filename);
     
     //アップロードされたファイルをDriveに保存
-    const originalFile = DriveApp.getFolderById(CONF.FOLER_ID).createFile(blob);
+    const originalFile = DriveApp.getFolderById(SEC.FOLER_ID).createFile(blob);
     const fileId = originalFile.getId();
 
     //リサイズしないチェックボックスの判定
     if(!e.parameters.noresize || e.parameters.noresize != 'on'){
       //指定サイズより大きい場合にリサイズ
-      resizeImage(fileId, CONF.FOLER_ID, CONF.RESIZE);
+      resizeImage(fileId, SEC.FOLER_ID, CONF.RESIZE);
     }
   }
   catch(ex){
