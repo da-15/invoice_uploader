@@ -90,9 +90,12 @@ function resizeImage(fileId, outputFolderId, resize) {
 
 //入力されたパラメーターの不正チェック
 function checkParameters(params){
-  if(!params.memo || !params.fileuri || !params.price){
+  if(!params.memo || !params.fileuri || !params.price || !params.password){
     //パラメーターがセットされていない
     return 'no_required'; //NG
+  }else if(params.password !== SEC.PASSWORD){
+    //パスワード違い
+    return 'password_incorrect'; //NG
   }else if(params.memo == '' || params.fileuri == '' || params.price == ''){
     return 'no_required'; //NG
     //パラメーターが空
