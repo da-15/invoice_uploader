@@ -33,18 +33,21 @@ function doPost(e) {
     filename += '.pdf';
   }
 
+  
+  
   try{
+    const folderId = getMyFolderId();
     const data = Utilities.base64Decode(e.parameters.fileuri, Utilities.Charset.UTF_8);
     const blob = Utilities.newBlob(data, e.parameters.filetype, filename);
     
     //アップロードされたファイルをDriveに保存
-    const originalFile = DriveApp.getFolderById(SEC.FOLER_ID).createFile(blob);
+    const originalFile = DriveApp.getFolderById(folderId).createFile(blob);
     const fileId = originalFile.getId();
 
     //リサイズしないチェックボックスの判定
     if(!e.parameters.noresize || e.parameters.noresize != 'on'){
       //指定サイズより大きい場合にリサイズ
-      resizeImage(fileId, SEC.FOLER_ID, CONF.RESIZE);
+      resizeImage(fileId, folderId, CONF.RESIZE);
     }
   }
   catch(ex){
@@ -106,8 +109,16 @@ function checkParameters(params){
   return ''; //OK
 }
 
+//自身の格納されているフォルダーIDを取得
+function getMyFolderId(){
+  return DriveApp.getFileById(ScriptApp.getScriptId()).getParents().next().getId();
+}
 
 //メッセージの生成 JSON
+
 function message(msg) {
   return ContentService.createTextOutput(JSON.stringify({result: msg})).setMimeType(ContentService.MimeType.JSON);
 }
+
+
+
