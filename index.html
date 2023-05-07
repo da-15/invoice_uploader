@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
   <head>
@@ -242,16 +243,50 @@
             $('#memo').val( $('#preset').val());
         });
 
-        //画像選択時にアップロード用情報をセット
+        // 画像選択時にアップロード用情報をセットし、リサイズ処理を行う
         $('#fileinput').on('change', function () {
-          let file = this.files[0];
-          let fr = new FileReader();
-          fr.onload = function (e) {
-            $('#filename').val(file.name); 
-            $('#filetype').val(file.type); 
-            $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
-          };
-          fr.readAsDataURL(file);
+        let file = this.files[0];
+        let fr = new FileReader();
+        fr.onload = function (e) {
+            // アップロード用情報をセット
+            $('#filename').val(file.name);
+            $('#filetype').val(file.type);
+
+            if(file.type !== 'image/jpeg' && file.type !== 'image/png'){
+                //リサイズしない
+                $('#fileuri').val(e.target.result.replace(/^.*,/, ''));
+            }
+            else{
+                // 画像リサイズ処理
+                let img = new Image();
+                img.onload = function() {
+                    let canvas = document.createElement('canvas');
+                    let ctx = canvas.getContext('2d');
+                    let max_size = 2400; // リサイズ後の最大サイズ（横幅・高さの大きい方に合わせる）
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height) {
+                        if (width > max_size) {
+                            height *= max_size / width;
+                            width = max_size;
+                        }
+                    } else {
+                        if (height > max_size) {
+                            width *= max_size / height;
+                            height = max_size;
+                        }
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    ctx.drawImage(img, 0, 0, width, height);
+                    // リサイズ後の画像をbase64形式に変換してアップロード用情報にセット
+                    let resized_image_data = canvas.toDataURL(file.type);
+                    $('#fileuri').val(resized_image_data.replace(/^.*,/, ''));
+                }
+                img.src = e.target.result;
+            }
+        };
+        fr.readAsDataURL(file);
         });
       });
 
@@ -376,9 +411,10 @@
           <input type="file" id="fileinput" class="cp_fileinput">
           <label for="fileinput" class="cp_file">ファイル選択/撮影</label>
           <input type="submit" value="アップロードする" id="upload_button" class="cp_button">
-          <br>
+          <!-- <br>
           <input type="checkbox" name="noresize" id="noresize">
           <label for="noresize" class="cp_checkbox">画像をリサイズしない</label>
+          -->
           <div class="cp_sparater"></div>
           <a href="JavaScript:initForm();"><small>クリアする</small></a>
           <input type="hidden" name="fileuri" id="fileuri">
