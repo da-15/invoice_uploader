@@ -1,2 +1,2 @@
 # invoice_uploader
-init
+ウェブ経由でレシートをアップロードする
