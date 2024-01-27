@@ -284,6 +284,9 @@
                     $('#fileuri').val(resized_image_data.replace(/^.*,/, ''));
                 }
                 img.src = e.target.result;
+
+                //選択した画像を表示する
+                $('#imageDisplay').attr('src', e.target.result);
             }
         };
         fr.readAsDataURL(file);
@@ -417,9 +420,10 @@
           <label for="noresize" class="cp_checkbox">画像をリサイズしない</label>
           -->
           <div class="cp_sparater"></div>
-          <a href="JavaScript:initForm();"><small>クリアする</small></a>
+          <a href="JavaScript:initForm();"><small>クリアする</small></a><br><br>
           <input type="hidden" name="fileuri" id="fileuri">
           <input type="hidden" name="filetype" id="filetype">
+          <img id="imageDisplay" src="assets/blank.png" alt="Image Preview" width="100%">
         </form>
       </div>
     </main>
