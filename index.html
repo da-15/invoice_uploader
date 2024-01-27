@@ -284,7 +284,7 @@
                     $('#fileuri').val(resized_image_data.replace(/^.*,/, ''));
                 }
                 img.src = e.target.result;
-
+                
                 //選択した画像を表示する
                 $('#imageDisplay').attr('src', e.target.result);
             }
@@ -362,6 +362,7 @@
         $('#price').val('');
         $('#fileuri').val('');
         $('#filename').val('');
+        $('#imageDisplay').attr('src', 'assets/blank.png');
       }
 
 
